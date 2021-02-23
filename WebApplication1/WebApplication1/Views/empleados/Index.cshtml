@@ -1,0 +1,112 @@
+﻿
+@model IEnumerable<WebApplication1.Models.empleado>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+
+
+@{
+
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	string json = serializer.Serialize(Model);
+
+}
+
+
+<h2>Index</h2>
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+<div class="table-responsive">
+	<table class="table" id="tabla">
+		<thead>
+			<tr>
+				<th class="head" scope="col" onclick="sortTable(0)" style="cursor:pointer">
+					Nombre
+				</th>
+				<th class="head"  scope="col" onclick="sortTable(1)" style="cursor:pointer">
+					Apellido Paterno
+				</th>
+				<th class="head"  scope="col" onclick="sortTable(2)" style="cursor:pointer">
+					Apellido Materno
+				</th>
+				<th class="head"  scope="col" onclick="sortTable(3)" style="cursor:pointer">
+					Salario
+				</th>
+				<th class="head"  scope="col" onclick="sortTable(4)" style="cursor:pointer">
+					Puesto
+				</th>
+				<th scope="col">
+
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr class="table-active">
+					<td>
+						@Html.DisplayFor(modelItem => item.nombre)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.apellido_paterno)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.apellido_materno)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.salario)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.posicion)
+					</td>
+					<td>
+						@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+						@Html.ActionLink("Details", "Details", new { id = item.id }) |
+						@Html.ActionLink("Delete", "Delete", new { id = item.id })
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<script>
+	jQuery(document).ready(function ($) {
+		$('.head').hover(
+			function () { $(this).addClass("bg-danger") },
+			function () { $(this).removeClass("bg-danger") }
+		)
+	});
+
+</script>
+<script>
+	function sortTable(number) {
+		var table, rows, switching, i, x, y, shouldSwitch;
+		table = document.getElementById("tabla");
+		switching = true;
+		while (switching) {
+			switching = false;
+			rows = table.rows;
+			for (i = 1; i < (rows.length - 1); i++) {
+				shouldSwitch = false;
+				x = rows[i].getElementsByTagName("TD")[number];
+				y = rows[i + 1].getElementsByTagName("TD")[number];
+				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+					shouldSwitch = true;
+					break;
+				}
+			}
+			if (shouldSwitch) {
+				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+				switching = true;
+			}
+		}
+	}
+
+
+</script>
+

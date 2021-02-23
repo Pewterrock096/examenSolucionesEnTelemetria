@@ -1,0 +1,15 @@
+CREATE TABLE public.empleado
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default" NOT NULL,
+    apellido_paterno text COLLATE pg_catalog."default" NOT NULL,
+    apellido_materno text COLLATE pg_catalog."default",
+    salario bigint NOT NULL,
+    posicion text COLLATE pg_catalog."default",
+    CONSTRAINT "Empleado_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.empleado
+    OWNER to postgres;
